@@ -3,16 +3,16 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pathToSourceFile = path.join(
+  __dirname,
+  'files',
+  'fileToCalculateHashFor.txt'
+);
+
 const calculateHash = async () => {
   try {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const pathToSourceFile = path.join(
-      __dirname,
-      'files',
-      'fileToCalculateHashFor.txt'
-    );
-
     const sourceData = await readFile(pathToSourceFile, 'utf-8');
     const hash = createHash('sha256');
     hash.update(sourceData);

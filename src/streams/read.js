@@ -3,11 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { stdout } from 'node:process';
 
-const read = async () => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const pathToSourceFile = path.join(__dirname, 'files', 'fileToRead.txt');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pathToSourceFile = path.join(__dirname, 'files', 'fileToRead.txt');
 
+const read = async () => {
   const readSteam = createReadStream(pathToSourceFile, 'utf-8');
 
   readSteam.on('data', (chunk) => {

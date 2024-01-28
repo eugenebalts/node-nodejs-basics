@@ -2,11 +2,11 @@ import { readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'path';
 
-const list = async () => {
-  const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
-  const pathToSourceDir = path.join(pathToCurDir, 'files');
-  const errorMsg = 'FS operation failed';
+const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
+const pathToSourceDir = path.join(pathToCurDir, 'files');
+const ERROR_MSG = 'FS operation failed';
 
+const list = async () => {
   try {
     const files = await readdir(pathToSourceDir);
 
@@ -14,7 +14,7 @@ const list = async () => {
       console.log(path.basename(file));
     });
   } catch (err) {
-    throw new Error(errorMsg);
+    throw new Error(ERROR_MSG);
   }
 };
 

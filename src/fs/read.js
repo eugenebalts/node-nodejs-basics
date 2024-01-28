@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const read = async () => {
-  const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
-  const pathToSourceFile = path.join(pathToCurDir, 'files', 'fileToRead.txt');
+const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
+const pathToSourceFile = path.join(pathToCurDir, 'files', 'fileToRead.txt');
 
+const read = async () => {
   try {
     const fileContent = await readFile(pathToSourceFile, 'utf-8');
 

@@ -2,29 +2,19 @@ import fs, { access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const rename = async () => {
-  const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
-  const pathToSourceFile = path.join(
-    pathToCurDir,
-    'files',
-    'wrongFilename.txt'
-  );
-  const pathToTargetFile = path.join(
-    pathToCurDir,
-    'files',
-    'properFilename.md'
-  );
-  const errorMsg = 'FS operation failed';
+const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
+const pathToSourceFile = path.join(pathToCurDir, 'files', 'wrongFilename.txt');
+const pathToTargetFile = path.join(pathToCurDir, 'files', 'properFilename.md');
+const ERROR_MSG = 'FS operation failed';
 
+const rename = async () => {
   try {
     await access(pathToTargetFile);
 
-    throw new Error(errorMsg);
+    throw new Error(ERROR_MSG);
   } catch (err) {
-    if (err instanceof Error && err.message === errorMsg) {
-      console.error(err);
-
-      return;
+    if (err instanceof Error && err.message === ERROR_MSG) {
+      throw new Error(ERROR_MSG);
     }
 
     try {
@@ -32,7 +22,7 @@ const rename = async () => {
 
       await fs.rename(pathToSourceFile, pathToTargetFile);
     } catch (err) {
-      throw new Error(errorMsg);
+      throw new Error(ERROR_MSG);
     }
   }
 };

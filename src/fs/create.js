@@ -2,21 +2,19 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'path';
 
-const create = async () => {
-  const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
-  const targetDir = path.join(pathToCurDir, 'files');
-  const filePath = path.join(targetDir, 'fresh.txt');
-  const errorMsg = 'FS operation failed';
+const pathToCurDir = path.dirname(fileURLToPath(import.meta.url));
+const targetDir = path.join(pathToCurDir, 'files');
+const filePath = path.join(targetDir, 'fresh.txt');
+const ERROR_MSG = 'FS operation failed';
 
+const create = async () => {
   try {
     await readFile(filePath, 'utf8');
 
-    throw new Error(errorMsg);
+    throw new Error(ERROR_MSG);
   } catch (err) {
-    if (err instanceof Error && err.message === errorMsg) {
-      console.error(err);
-
-      return;
+    if (err instanceof Error && err.message === ERROR_MSG) {
+      throw new Error(ERROR_MSG);
     }
 
     try {
